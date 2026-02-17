@@ -1,3 +1,5 @@
+"""Flask application entry point for the calculator web app."""
+
 from flask import Flask, request, render_template
 from operators import add, subtract, multiply, divide
 
@@ -11,6 +13,17 @@ OPS = {
 }
 
 def calculate(expr: str):
+    """Evaluate a two-operand arithmetic expression.
+
+    Args:
+        expr: Expression string such as ``"10+2"`` or ``"7 / 3"``.
+
+    Returns:
+        The numeric result returned by the selected operator function.
+
+    Raises:
+        ValueError: If the expression is empty, malformed, or not numeric.
+    """
     if not expr or not isinstance(expr, str):
         raise ValueError("empty expression")
 
@@ -20,6 +33,7 @@ def calculate(expr: str):
     op_char = None
 
     for i, ch in enumerate(s):
+        # Keep parsing strict: exactly one operator is expected.
         if ch in OPS:
             if op_pos != -1:
                 raise ValueError("only one operator is allowed")
@@ -43,6 +57,12 @@ def calculate(expr: str):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    """Render calculator page and handle submitted expressions.
+
+    Returns:
+        Rendered HTML page where `result` contains either the computed value
+        or an error string.
+    """
     result = ""
     if request.method == 'POST':
         expression = request.form.get('display', '')
