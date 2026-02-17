@@ -46,4 +46,4 @@ def divide(a,b):
     Returns:
         Numeric division result.
     """
-    return a // b
+    return a / b
