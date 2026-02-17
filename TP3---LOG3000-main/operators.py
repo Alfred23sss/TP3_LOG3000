@@ -34,7 +34,7 @@ def multiply(a,b):
     Returns:
         Numeric multiplication result.
     """
-    return a ** b
+    return a * b
 
 def divide(a,b):
     """Return the division result between two numbers.
